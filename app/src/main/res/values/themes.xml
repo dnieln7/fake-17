@@ -22,4 +22,14 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <!-- Custom -->
+
+    <style name="Theme.Fake17.Headline4.Colored" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="Theme.Fake17.Gradient">
+        <item name="android:background">@color/primary</item>
+    </style>
 </resources>
