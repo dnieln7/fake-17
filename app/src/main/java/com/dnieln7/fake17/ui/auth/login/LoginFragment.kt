@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.dnieln7.fake17.Fake17Application
-import com.dnieln7.fake17.data.source.user.UserInMemoryAuthSource
-import com.dnieln7.fake17.data.source.user.UserInMemoryDataSource
+import com.dnieln7.fake17.R
 import com.dnieln7.fake17.databinding.LoginFragmentBinding
 import com.dnieln7.fake17.ui.auth.AuthState
 import com.dnieln7.fake17.utils.NavigationUtils.navigate
 import com.dnieln7.fake17.utils.Printer
+import com.dnieln7.fake17.utils.TextValidation.isEmail
 
 class LoginFragment : Fragment() {
     private var _binding: LoginFragmentBinding? = null
@@ -36,12 +36,7 @@ class LoginFragment : Fragment() {
         ).get(LoginViewModel::class.java)
 
         with(binding) {
-            login.setOnClickListener {
-                viewModel.login(
-                    email.text.toString(),
-                    password.text.toString()
-                )
-            }
+            login.setOnClickListener { validateForm() }
             toSignup.setOnClickListener {
                 LoginFragmentDirections.actionLoginFragmentToSignupFragment().navigate(it)
                 viewModel.clearState()
@@ -59,7 +54,11 @@ class LoginFragment : Fragment() {
                     binding.progress.visibility = View.VISIBLE
                     binding.login.isEnabled = false
                 }
-                AuthState.Success -> TODO()
+                AuthState.Success -> {
+                    Printer.toast(requireContext(), getString(R.string.welcome))
+                    binding.progress.visibility = View.GONE
+                    binding.login.isEnabled = true
+                }
                 AuthState.Nothing -> {
                     binding.email.text?.clear()
                     binding.password.text?.clear()
@@ -73,5 +72,20 @@ class LoginFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun validateForm() {
+        with(binding) {
+            emailContainer.error = if (email.text.toString().isEmpty())
+                getString(R.string.field_required) else if (!email.text.toString().isEmail())
+                getString(R.string.invalid_email) else null
+
+            passwordContainer.error = if (password.text.toString().isEmpty())
+                getString(R.string.field_required) else null
+
+            if (emailContainer.error == null && passwordContainer.error == null) {
+                viewModel.login(email.text.toString(), password.text.toString())
+            }
+        }
     }
 }

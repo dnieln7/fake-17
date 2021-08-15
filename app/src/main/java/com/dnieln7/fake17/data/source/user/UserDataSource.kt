@@ -1,9 +1,10 @@
 package com.dnieln7.fake17.data.source.user
 
 import com.dnieln7.fake17.domain.User
+import io.reactivex.rxjava3.core.Single
 
 interface UserDataSource {
-    suspend fun save(user: User): Long
+    fun save(user: User): Single<Long>
 
-    suspend fun deleteAll()
+    fun deleteAll()
 }

@@ -55,7 +55,7 @@ class SignupFragment : Fragment() {
                     binding.signup.isEnabled = false
                 }
                 AuthState.Success -> {
-                    Printer.toast(requireContext(), "Thanks for signing up!")
+                    Printer.toast(requireContext(), getString(R.string.signup_thanks))
                     findNavController().popBackStack()
                 }
                 AuthState.Nothing -> {

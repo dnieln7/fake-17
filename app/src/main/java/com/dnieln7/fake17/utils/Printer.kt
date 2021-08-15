@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
-import java.util.logging.Level
-import java.util.logging.Logger
 
 /**
  * Helper class to print messages to the UI

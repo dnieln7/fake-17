@@ -1,7 +1,8 @@
 package com.dnieln7.fake17.data.source.user
 
 import com.dnieln7.fake17.domain.User
-import kotlinx.coroutines.delay
+import com.dnieln7.fake17.domain.UserCredentials
+import io.reactivex.rxjava3.core.Single
 
 class UserInMemoryAuthSource : UserAuthSource {
     private val users: MutableList<User> = mutableListOf(
@@ -16,33 +17,37 @@ class UserInMemoryAuthSource : UserAuthSource {
         )
     )
 
-    override suspend fun login(email: String, password: String): User {
-        val user = users.find { it.email == email }
+    override fun login(userCredentials: UserCredentials): Single<User> {
+        return Single.fromCallable {
+            Thread.sleep(2000)
 
-        delay(2000)
+            val user = users.find { it.email == userCredentials.email }
 
-        if (user == null) {
-            throw Exception("User not found")
-        } else {
-            if (user.password == password) {
-                return user
+            if (user == null) {
+                throw Exception("User not found")
             } else {
-                throw Exception("Wrong password")
+                if (user.password == userCredentials.password) {
+                    return@fromCallable user
+                } else {
+                    throw Exception("Wrong password")
+                }
             }
         }
     }
 
-    override suspend fun signUp(user: User): User {
-        val existing = users.find { it.email == user.email }
+    override fun signUp(user: User): Single<User> {
+        return Single.fromCallable {
+            Thread.sleep(2000)
 
-        delay(2000)
+            val existing = users.find { it.email == user.email }
 
-        if (existing != null) {
-            throw Exception("Email already exits")
+            if (existing != null) {
+                throw Exception("Email already exits")
+            }
+
+            users.add(user)
+
+            return@fromCallable user
         }
-
-        users.add(user)
-
-        return user
     }
 }
