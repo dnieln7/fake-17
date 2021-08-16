@@ -1,10 +1,7 @@
 package com.dnieln7.fake17.ui.home.cat
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.dnieln7.fake17.data.repository.CatRepository
 import com.dnieln7.fake17.domain.Cat
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -14,8 +11,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class CatsViewModel(private val catRepository: CatRepository) : ViewModel() {
     private val _apiState = MutableLiveData<ApiState>()
     private val _cats = MutableLiveData<List<Cat>>()
+    private val _filteredCats = MutableLiveData<List<Cat>>()
 
-    val cats: LiveData<List<Cat>> = _cats
+    val cats: LiveData<List<Cat>> = _filteredCats
     val apiState: LiveData<ApiState> = _apiState
 
     init {
@@ -38,6 +36,7 @@ class CatsViewModel(private val catRepository: CatRepository) : ViewModel() {
             .subscribe(
                 {
                     _cats.value = it
+                    _filteredCats.value = it
                     _apiState.value = ApiState.Success
                 },
                 {
@@ -45,6 +44,13 @@ class CatsViewModel(private val catRepository: CatRepository) : ViewModel() {
                     _apiState.value = ApiState.Error(it.toString())
                 }
             )
+    }
+
+    fun filterByKeyword(keyword: String) {
+        if (_cats.value != null) {
+            _filteredCats.value = _cats.value!!
+                .filter { it.origin.contains(keyword, true) }
+        }
     }
 
     class Factory(private val catRepository: CatRepository) : ViewModelProvider.Factory {

@@ -27,5 +27,7 @@
     <string name="cat_child_friendly">This cat is child friendly</string>
     <string name="cat_dog_friendly">This cat is dog friendly</string>
     <string name="cat_hypoallergenic">This cat is hypoallergenic</string>
+    <string name="search">Search</string>
+    <string name="search_by_country">Search by country</string>
     <!--Cats-->
 </resources>

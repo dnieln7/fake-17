@@ -1,12 +1,13 @@
 package com.dnieln7.fake17.ui.home.cat
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.dnieln7.fake17.Fake17Application
+import com.dnieln7.fake17.R
 import com.dnieln7.fake17.databinding.CatsFragmentBinding
 import com.dnieln7.fake17.domain.Cat
 import com.dnieln7.fake17.utils.NavigationUtils.navigate
@@ -23,6 +24,8 @@ class CatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = CatsFragmentBinding.inflate(inflater, container, false)
+
+        setHasOptionsMenu(true)
 
         val serviceLocator = (requireActivity().application as Fake17Application).serviceLocator
 
@@ -62,6 +65,37 @@ class CatsFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_cats, menu)
+
+        val searchView = menu.findItem(R.id.search_action).actionView as SearchView
+
+        searchView.apply {
+            isIconifiedByDefault = true
+            imeOptions = EditorInfo.IME_ACTION_SEARCH
+            queryHint = getString(R.string.search_by_country)
+
+            setOnQueryTextFocusChangeListener { _, hasFocus ->
+                if(!hasFocus && searchView.query.isBlank()) {
+                    searchView.isIconified = true
+                }
+            }
+
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText != null) {
+                        viewModel.filterByKeyword(newText)
+                    }
+                    return true
+                }
+            })
+        }
     }
 
     override fun onDestroy() {
