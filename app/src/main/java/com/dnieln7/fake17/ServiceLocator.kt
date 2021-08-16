@@ -2,15 +2,23 @@ package com.dnieln7.fake17
 
 import android.content.Context
 import com.dnieln7.fake17.data.database.FakeDatabase.Companion.createFakeDatabase
-import com.dnieln7.fake17.data.network.user.UserApi
+import com.dnieln7.fake17.data.network.Api
+import com.dnieln7.fake17.data.repository.CatRepository
+import com.dnieln7.fake17.data.source.cat.CatDbDataSource
+import com.dnieln7.fake17.data.source.cat.CatApiDataSource
 import com.dnieln7.fake17.data.source.user.UserLocalDataSource
 import com.dnieln7.fake17.data.source.user.UserRemoteAuthSource
 
 class ServiceLocator(context: Context) {
 
-    private val userApi = UserApi("https://eventos-uv-api.herokuapp.com")
+    private val api = Api("https://eventos-uv-api.herokuapp.com", "https://api.thecatapi.com/v1/")
     private val fakeDatabase = context.createFakeDatabase()
 
-    val userAuthSource = UserRemoteAuthSource(userApi.service)
+    val userAuthSource = UserRemoteAuthSource(api.userService)
     val userDataSource = UserLocalDataSource(fakeDatabase.userDao())
+
+    val catApiDataSource = CatApiDataSource(api.catService)
+    val catDbDataSource = CatDbDataSource(fakeDatabase.catDao())
+
+    val catRepository = CatRepository(catDbDataSource, catApiDataSource)
 }

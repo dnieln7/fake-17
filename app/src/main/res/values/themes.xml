@@ -29,7 +29,24 @@
         <item name="android:textColor">@color/primary</item>
     </style>
 
-    <style name="Theme.Fake17.Gradient">
-        <item name="android:background">@color/primary</item>
+    <style name="Theme.Fake17.IconDisabled">
+        <item name="tint">@color/textDisabled</item>
+    </style>
+
+    <style name="Theme.Fake17.TextDisabled">
+        <item name="android:textColor">@color/textDisabled</item>
+    </style>
+
+    <style name="Theme.Fake17.IconText" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/success</item>
+        <item name="android:textStyle">bold</item>
+        <item name="drawableTint">@color/success</item>
+    </style>
+
+    <style name="Theme.Fake17.CatLisTile">
+        <item name="cardBackgroundColor">@color/rippleBackground</item>
+        <item name="rippleColor">@color/ripple</item>
+        <item name="cardElevation">5dp</item>
+        <item name="cardUseCompatPadding">true</item>
     </style>
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_home.xml"
+    app:startDestination="@id/catsFragment">
+
+    <fragment
+        android:id="@+id/catsFragment"
+        android:name="com.dnieln7.fake17.ui.home.cat.CatsFragment"
+        android:label="Home"
+        tools:layout="@layout/cats_fragment">
+        <action
+            android:id="@+id/action_catsFragment_to_catDetailFragment"
+            app:destination="@id/catDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/catDetailFragment"
+        android:name="com.dnieln7.fake17.ui.home.cat.CatDetailFragment"
+        tools:layout="@layout/cat_detail_fragment" >
+        <argument
+            android:name="cat"
+            app:argType="com.dnieln7.fake17.domain.Cat" />
+    </fragment>
+</navigation>

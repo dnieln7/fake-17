@@ -1,6 +1,7 @@
 package com.dnieln7.fake17.data.source.user
 
 import com.dnieln7.fake17.domain.User
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
 class UserInMemoryDataSource : UserDataSource {
@@ -15,7 +16,15 @@ class UserInMemoryDataSource : UserDataSource {
         }
     }
 
-    override fun deleteAll():Single<Int> {
+    override fun getFirstUser(): Maybe<User> {
+        return Maybe.fromCallable {
+            Thread.sleep(2000)
+
+            return@fromCallable users.first()
+        }
+    }
+
+    override fun deleteAll(): Single<Int> {
         return Single.fromCallable {
             Thread.sleep(2000)
 

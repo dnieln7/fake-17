@@ -1,5 +1,6 @@
 package com.dnieln7.fake17.ui.auth.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.dnieln7.fake17.Fake17Application
 import com.dnieln7.fake17.R
 import com.dnieln7.fake17.databinding.LoginFragmentBinding
 import com.dnieln7.fake17.ui.auth.AuthState
+import com.dnieln7.fake17.ui.home.HomeActivity
 import com.dnieln7.fake17.utils.NavigationUtils.navigate
 import com.dnieln7.fake17.utils.Printer
 import com.dnieln7.fake17.utils.TextValidation.isEmail
@@ -58,6 +60,10 @@ class LoginFragment : Fragment() {
                     Printer.toast(requireContext(), getString(R.string.welcome))
                     binding.progress.visibility = View.GONE
                     binding.login.isEnabled = true
+
+                    requireActivity().startActivity(
+                        Intent(requireContext(), HomeActivity::class.java)
+                    )
                 }
                 AuthState.Nothing -> {
                     binding.email.text?.clear()
