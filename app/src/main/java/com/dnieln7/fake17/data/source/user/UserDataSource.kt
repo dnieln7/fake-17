@@ -6,5 +6,5 @@ import io.reactivex.rxjava3.core.Single
 interface UserDataSource {
     fun save(user: User): Single<Long>
 
-    fun deleteAll()
+    fun deleteAll(): Single<Int>
 }

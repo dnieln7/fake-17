@@ -1,20 +1,34 @@
 package com.dnieln7.fake17.domain
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "tb_users")
 data class User(
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
-    val id: Int,
+    var id: Int,
+    @ColumnInfo(name = "name")
     @SerializedName("nombre")
-    val name: String,
+    var name: String,
+    @ColumnInfo(name = "last_name")
     @SerializedName("apellidos")
-    val lastName: String,
+    var lastName: String,
+    @ColumnInfo(name = "email")
     @SerializedName("email")
-    val email: String,
+    var email: String,
+    @Ignore
     @SerializedName("password")
     val password: String,
+    @ColumnInfo(name = "hobbies")
     @SerializedName("intereses")
-    val hobbies: List<String>,
+    var hobbies: List<String>,
+    @ColumnInfo(name = "role")
     @SerializedName("rol")
-    val role: String
-)
+    var role: String
+) {
+    constructor(): this(0, "", "", "", "", emptyList(), "")
+}

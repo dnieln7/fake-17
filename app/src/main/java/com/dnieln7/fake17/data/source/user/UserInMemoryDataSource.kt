@@ -15,7 +15,15 @@ class UserInMemoryDataSource : UserDataSource {
         }
     }
 
-    override fun deleteAll() {
-        users.clear()
+    override fun deleteAll():Single<Int> {
+        return Single.fromCallable {
+            Thread.sleep(2000)
+
+            val count = users.size
+
+            users.clear()
+
+            return@fromCallable count
+        }
     }
 }

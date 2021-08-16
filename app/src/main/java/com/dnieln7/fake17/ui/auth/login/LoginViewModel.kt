@@ -24,9 +24,9 @@ class LoginViewModel(
         _state.value = AuthState.Loading
 
         userAuthSource.login(UserCredentials(email, password, "estudiante"))
+            .flatMap { userDataSource.save(it) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .flatMap { userDataSource.save(it) }
             .subscribe(
                 { _state.value = AuthState.Success },
                 {
