@@ -13,6 +13,10 @@
         <item name="android:textColor">@color/textOnDarkPrimary</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Shape -->
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Fake17.Medium</item>
+        <!-- Shape -->
     </style>
 
     <style name="Theme.Fake17.Splash">
