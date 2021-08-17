@@ -30,4 +30,13 @@
     <string name="search">Search</string>
     <string name="search_by_country">Search by country</string>
     <!--Cats-->
+
+    <!--Drawer-->
+    <string name="home">Home</string>
+    <string name="requests">Requests</string>
+    <string name="reviews">Reviews</string>
+    <string name="payments">Payments</string>
+    <string name="settings">Settings</string>
+    <string name="log_out">Log out</string>
+    <!--Drawer-->
 </resources>
