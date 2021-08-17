@@ -55,13 +55,13 @@ class HomeActivity : AppCompatActivity() {
 
             when (it.itemId) {
                 R.id.logout -> {
-                    userDataSource.deleteAll()
+                    catLocalDataSource.deleteAll()
                         .flatMap { deleted ->
                             if (deleted > 0) {
-                                return@flatMap catLocalDataSource.deleteAll()
+                                return@flatMap userDataSource.deleteAll()
+                            } else {
+                                return@flatMap Single.just(deleted)
                             }
-
-                            return@flatMap Single.just(deleted)
                         }
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

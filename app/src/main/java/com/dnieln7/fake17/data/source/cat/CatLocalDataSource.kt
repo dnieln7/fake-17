@@ -5,7 +5,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface CatLocalDataSource {
-    fun save(cats: List<Cat>): Single<List<Long>>
+    fun save(cats: List<Cat>): List<Long>
 
     fun getCats(): Observable<List<Cat>>
 

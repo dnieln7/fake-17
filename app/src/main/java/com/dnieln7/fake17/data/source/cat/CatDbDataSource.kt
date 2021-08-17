@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Single
 
 class CatDbDataSource(private val dao: CatDao) : CatLocalDataSource {
 
-    override fun save(cats: List<Cat>): Single<List<Long>> {
+    override fun save(cats: List<Cat>): List<Long> {
         return dao.save(cats)
     }
 

@@ -64,6 +64,7 @@ class LoginFragment : Fragment() {
                     requireActivity().startActivity(
                         Intent(requireContext(), HomeActivity::class.java)
                     )
+                    requireActivity().finish()
                 }
                 AuthState.Nothing -> {
                     binding.email.text?.clear()

@@ -7,8 +7,8 @@ import com.google.gson.Gson
 
 class CatConverters {
     @TypeConverter
-    fun fromImage(value: CatImage): String {
-        return Gson().toJson(value)
+    fun fromImage(value: CatImage?): String {
+        return if (value != null) Gson().toJson(value) else Gson().toJson(CatImage())
     }
 
     @TypeConverter

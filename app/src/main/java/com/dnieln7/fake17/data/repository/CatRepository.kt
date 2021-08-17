@@ -3,6 +3,7 @@ package com.dnieln7.fake17.data.repository
 import com.dnieln7.fake17.data.source.cat.CatLocalDataSource
 import com.dnieln7.fake17.data.source.cat.CatRemoteDataSource
 import com.dnieln7.fake17.domain.Cat
+import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
@@ -19,8 +20,8 @@ class CatRepository(
         return catLocalDataSource.getCats()
     }
 
-    fun getApiCats(limit: Int): Single<List<Cat>> {
-        return catRemoteDataSource.getCats(limit)
-            .doOnSuccess { catLocalDataSource.save(it) }
+    fun getApiCats(limit: Int): Observable<List<Cat>>? {
+        return catRemoteDataSource.getCats(limit).toObservable()
+            .doOnNext { catLocalDataSource.save(it) }
     }
 }

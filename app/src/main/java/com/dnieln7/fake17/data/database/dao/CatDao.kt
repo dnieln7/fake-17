@@ -15,7 +15,7 @@ interface CatDao {
     fun findAll(): Observable<List<Cat>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(cats: List<Cat>): Single<List<Long>>
+    fun save(cats: List<Cat>): List<Long>
 
     @Query("DELETE FROM tb_cats")
     fun deleteAll(): Single<Int>

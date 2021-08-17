@@ -26,7 +26,7 @@ class CatsViewModel(private val catRepository: CatRepository) : ViewModel() {
         catRepository.getDbCats()
             .flatMap {
                 if (it.isEmpty()) {
-                    return@flatMap catRepository.getApiCats(50).toObservable()
+                    return@flatMap catRepository.getApiCats(50)
                 } else {
                     return@flatMap Observable.just(it)
                 }
