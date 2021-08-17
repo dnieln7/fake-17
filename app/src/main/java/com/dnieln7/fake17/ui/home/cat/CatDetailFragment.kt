@@ -25,17 +25,24 @@ class CatDetailFragment : Fragment() {
     ): View {
         _binding = CatDetailFragmentBinding.inflate(inflater, container, false)
 
+        // Get cat instance provided with NavArgs
         val cat = args.cat
+
+        // Create an Uri instance of the cat's image if not null
         val uri = cat.catImage?.url?.toUri()?.buildUpon()?.scheme("https")?.build()
 
         (activity as HomeActivity).supportActionBar?.title = cat.name
 
         with(binding) {
             image.load(uri) {
-                crossfade(true)
-                error(R.drawable.ic_broken_image)
+                crossfade(true) // An smooth transition to reveal the image when it's loaded
+                error(R.drawable.ic_broken_image) // Icon to display if the image could not be loaded
             }
             name.text = cat.name
+
+            // Set score based friendliness attributes, Of a score of 1 to 5, if the current cat
+            // has at least 3 the attribute is displayed
+
             childFriendly.visibility = if(cat.childFriendly < 3) View.GONE else View.VISIBLE
             dogFriendly.visibility = if(cat.dogFriendly < 3) View.GONE else View.VISIBLE
             hypoallergenic.visibility = if(cat.hypoallergenic < 3) View.GONE else View.VISIBLE

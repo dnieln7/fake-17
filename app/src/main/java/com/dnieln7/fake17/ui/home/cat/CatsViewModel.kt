@@ -23,6 +23,7 @@ class CatsViewModel(private val catRepository: CatRepository) : ViewModel() {
     fun fetchCats() {
         _apiState.value = ApiState.Loading
 
+        // If theres data in the database return it. If not fetch from server and save.
         catRepository.getDbCats()
             .flatMap {
                 if (it.isEmpty()) {
@@ -46,6 +47,11 @@ class CatsViewModel(private val catRepository: CatRepository) : ViewModel() {
             )
     }
 
+    /**
+     * Changes the filtered cats value to a list of cats whom origin countries contains the provided keyword.
+     *
+     * @param keyword Text to filter the list.
+     */
     fun filterByKeyword(keyword: String) {
         if (_cats.value != null) {
             _filteredCats.value = _cats.value!!
@@ -53,6 +59,12 @@ class CatsViewModel(private val catRepository: CatRepository) : ViewModel() {
         }
     }
 
+
+    /**
+     * Creates an instance of [CatsViewModel] with the provided dependencies.
+     *
+     * @author dnieln7
+     */
     class Factory(private val catRepository: CatRepository) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")

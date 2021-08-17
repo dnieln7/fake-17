@@ -27,8 +27,10 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = LoginFragmentBinding.inflate(inflater, container, false)
 
+        // Get Service locator for application
         val serviceLocator = (requireActivity().application as Fake17Application).serviceLocator
 
+        // Initialize view model with it's dependencies
         viewModel = ViewModelProvider(
             this,
             LoginViewModel.Factory(
@@ -41,10 +43,11 @@ class LoginFragment : Fragment() {
             login.setOnClickListener { validateForm() }
             toSignup.setOnClickListener {
                 LoginFragmentDirections.actionLoginFragmentToSignupFragment().navigate(it)
-                viewModel.clearState()
+                viewModel.clearState() // Used to reset the form
             }
         }
 
+        // Set listener for AuthState
         viewModel.state.observe(viewLifecycleOwner, {
             when (it) {
                 is AuthState.Failure -> {

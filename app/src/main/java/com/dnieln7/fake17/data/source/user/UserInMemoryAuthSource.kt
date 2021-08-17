@@ -4,6 +4,11 @@ import com.dnieln7.fake17.domain.User
 import com.dnieln7.fake17.domain.UserCredentials
 import io.reactivex.rxjava3.core.Single
 
+/**
+ * An implementation of [UserAuthSource] that uses in memory list to authenticate users.
+ *
+ * @author dnieln7
+ */
 class UserInMemoryAuthSource : UserAuthSource {
     private val users: MutableList<User> = mutableListOf(
         User(

@@ -26,12 +26,18 @@ abstract class FakeDatabase : RoomDatabase() {
 
     companion object {
 
+        /**
+         * Migration to create a new table for [Cat] entity.
+         */
         private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `tb_cats` (`id` TEXT NOT NULL, `affection_level` INTEGER NOT NULL, `child_friendly` INTEGER NOT NULL, `description` TEXT NOT NULL, `dog_friendly` INTEGER NOT NULL, `energy_level` INTEGER NOT NULL, `hairless` INTEGER NOT NULL, `hypoallergenic` INTEGER NOT NULL, `image` TEXT, `indoor` INTEGER, `life_span` TEXT NOT NULL, `name` TEXT NOT NULL, `origin` TEXT NOT NULL, `shedding_level` INTEGER NOT NULL, `social_needs` INTEGER NOT NULL, `stranger_friendly` INTEGER NOT NULL, `temperament` TEXT NOT NULL, `weight` TEXT NOT NULL, `wikipedia_url` TEXT, PRIMARY KEY(`id`))")
             }
         }
 
+        /**
+         * Helper method to create an instance of [FakeDatabase]
+         */
         fun Context.createFakeDatabase(): FakeDatabase {
             return Room.databaseBuilder(
                 this,

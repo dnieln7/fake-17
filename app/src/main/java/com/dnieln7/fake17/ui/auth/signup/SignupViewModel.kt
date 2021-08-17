@@ -40,6 +40,11 @@ class SignupViewModel(
         _state.value = AuthState.Nothing
     }
 
+    /**
+     * Creates an instance of [SignupViewModel] with the provided dependencies.
+     *
+     * @author dnieln7
+     */
     class Factory(private val userAuthSource: UserAuthSource) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")

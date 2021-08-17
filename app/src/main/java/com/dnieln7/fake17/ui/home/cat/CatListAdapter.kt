@@ -16,13 +16,15 @@ class CatListAdapter(private val cats: List<Cat>, private val onClick: (Cat) -> 
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(cat: Cat, onClick: (Cat) -> Unit) {
+
+            // Create an Uri instance of the cat's image if not null
             val uri = cat.catImage?.url?.toUri()?.buildUpon()?.scheme("https")?.build()
 
             with(binding) {
                 root.setOnClickListener { onClick(cat) }
                 image.load(uri) {
-                    crossfade(true)
-                    error(R.drawable.ic_broken_image)
+                    crossfade(true) // An smooth transition to reveal the image when it's loaded
+                    error(R.drawable.ic_broken_image) // Icon to display if the image could not be loaded
                 }
                 name.text = cat.name
                 origin.text = cat.origin

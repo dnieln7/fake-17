@@ -31,14 +31,18 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
+        // Gets data sources to read and delete data
         val userDataSource = (application as Fake17Application).serviceLocator.userDataSource
         val catLocalDataSource = (application as Fake17Application).serviceLocator.catDbDataSource
 
+        // Get NavHost and initialize the navigation controller
         val host = supportFragmentManager.findFragmentById(R.id.home_nav_host) as NavHostFragment
         navController = host.navController
 
+        // Get Drawer's header layout
         val headerView: View = binding.drawerContent.getHeaderView(0)
 
+        // Set user's name and email of the header layout
         userDataSource.getFirstUser()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -49,10 +53,15 @@ class HomeActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawer)
 
+        // Configures the Toolbar and Drawer to operate with Navigation
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.drawerContent.setupWithNavController(navController)
+
+        // Manually handles the navigation events of the Drawer.
         binding.drawerContent.setNavigationItemSelectedListener {
 
+            // As the other screens are not implemented we only handle the case of the
+            // Logout and Cats fragment selection
             when (it.itemId) {
                 R.id.logout -> {
                     catLocalDataSource.deleteAll()

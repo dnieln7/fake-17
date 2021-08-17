@@ -3,10 +3,16 @@ package com.dnieln7.fake17.data.repository
 import com.dnieln7.fake17.data.source.cat.CatLocalDataSource
 import com.dnieln7.fake17.data.source.cat.CatRemoteDataSource
 import com.dnieln7.fake17.domain.Cat
-import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 
+/**
+ * Repository for cats data.
+ *
+ * @author dnieln7
+ *
+ * @param catLocalDataSource Implementation of a [CatLocalDataSource]
+ * @param catRemoteDataSource Implementation of a [CatRemoteDataSource]
+ */
 class CatRepository(
     private val catLocalDataSource: CatLocalDataSource,
     private val catRemoteDataSource: CatRemoteDataSource

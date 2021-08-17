@@ -23,6 +23,7 @@ class LoginViewModel(
     fun login(email: String, password: String) {
         _state.value = AuthState.Loading
 
+        // Tries to login and save the returned user
         userAuthSource.login(UserCredentials(email, password, "estudiante"))
             .flatMap { userDataSource.save(it) }
             .subscribeOn(Schedulers.io())
@@ -40,6 +41,11 @@ class LoginViewModel(
         _state.value = AuthState.Nothing
     }
 
+    /**
+     * Creates an instance of [LoginViewModel] with the provided dependencies.
+     *
+     * @author dnieln7
+     */
     class Factory(
         private val userAuthSource: UserAuthSource,
         private val userDataSource: UserDataSource

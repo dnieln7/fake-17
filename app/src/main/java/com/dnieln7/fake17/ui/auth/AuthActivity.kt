@@ -19,6 +19,7 @@ class AuthActivity : AppCompatActivity() {
         binding = AuthMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Get NavHost and initialize the navigation controller
         val host = supportFragmentManager.findFragmentById(R.id.auth_nav_host) as NavHostFragment
         navController = host.navController
 

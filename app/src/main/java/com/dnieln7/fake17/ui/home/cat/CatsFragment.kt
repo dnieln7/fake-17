@@ -25,18 +25,22 @@ class CatsFragment : Fragment() {
     ): View {
         _binding = CatsFragmentBinding.inflate(inflater, container, false)
 
+        // Enable menu to display Search view
         setHasOptionsMenu(true)
 
+        // Get Service locator for application
         val serviceLocator = (requireActivity().application as Fake17Application).serviceLocator
 
+        // Initialize view model with it's dependencies
         viewModel = ViewModelProvider(
             this,
             CatsViewModel.Factory(serviceLocator.catRepository)
         ).get(CatsViewModel::class.java)
 
         binding.refresh.setOnRefreshListener { viewModel.fetchCats() }
-        binding.items.setHasFixedSize(true)
+        binding.items.setHasFixedSize(true) // This list size it's not determined by it's content
 
+        // Set listener for ApiState
         viewModel.apiState.observe(viewLifecycleOwner, {
             when (it) {
                 is ApiState.Error -> {
@@ -60,6 +64,8 @@ class CatsFragment : Fragment() {
                 }
             }
         })
+
+        // Set listener for the cat list
         viewModel.cats.observe(viewLifecycleOwner, {
             binding.items.adapter = CatListAdapter(it) { cat -> toDetails(cat) }
         })
@@ -73,16 +79,19 @@ class CatsFragment : Fragment() {
         val searchView = menu.findItem(R.id.search_action).actionView as SearchView
 
         searchView.apply {
-            isIconifiedByDefault = true
+            isIconifiedByDefault = true // Search View is hidden by default
             imeOptions = EditorInfo.IME_ACTION_SEARCH
             queryHint = getString(R.string.search_by_country)
 
+            // If the user presses the back button and the query text is empty
+            // the Search View is hidden
             setOnQueryTextFocusChangeListener { _, hasFocus ->
                 if(!hasFocus && searchView.query.isBlank()) {
                     searchView.isIconified = true
                 }
             }
 
+            // The search will trigger every time the user inputs or deletes a character.
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return false
@@ -103,6 +112,9 @@ class CatsFragment : Fragment() {
         _binding = null
     }
 
+    /**
+     * Navigate to the provided [Cat] details screen.
+     */
     private fun toDetails(cat: Cat) {
         CatsFragmentDirections.actionCatsFragmentToCatDetailFragment(cat).navigate(binding.root)
     }
