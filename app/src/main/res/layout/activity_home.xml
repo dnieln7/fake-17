@@ -27,11 +27,11 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                style="@style/Theme.Fake17.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:titleCentered="true"
-                app:titleTextColor="@color/primary" />
+                app:title="asd"
+                app:titleCentered="true" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -56,10 +56,10 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/drawer_content"
+        style="@style/Theme.Fake17.Drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/activity_home_drawer_header"
-        app:itemIconTint="@color/primary"
         app:menu="@menu/drawer_menu_home" />
 </androidx.drawerlayout.widget.DrawerLayout>

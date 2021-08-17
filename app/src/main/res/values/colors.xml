@@ -15,6 +15,7 @@
     <color name="textOnDarkDisabled">#60FFFFFF</color>
 
     <color name="ripple">#603F51B5</color>
+    <color name="rippleOnDark">#607986CB</color>
     <color name="rippleBackground">#153F51B5</color>
 
     <color name="success">#4CAF50</color>
